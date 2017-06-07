@@ -7,19 +7,12 @@ class AutoLetsEncrypt{
 	private $acme_type;
 	private $cert_dir;
 
-
-	function __construct(
-		$php_dir='/var/bin/php',
-		$acme_dir='/var/letsencrypt',
-		$host_dir='/var/www/vhosts',
-		$acme_type='acme-v01.api.letsencrypt.org.directory'){
-
-
-		$this->php_dir = $php_dir;
-		$this->acme_dir = $acme_dir;
-		$this->host_dir = $host_dir;
-		$this->acme_type = $acme_type;
-		$this->cert_dir = $acme_dir.'/certs/'.$acme_type;
+	function __construct($settings = array()){
+		$this->php_dir = $settings['php_dir'];
+		$this->acme_dir = $settings['acme_dir'];
+		$this->host_dir = $settings['host_dir'];
+		$this->acme_type = $settings['acme_type'];
+		$this->cert_dir = $settings['acme_dir'].'/certs/'.$settings['acme_type'];
 	}
 
 	public function issueCertificate($domain, $data=array()){
@@ -45,14 +38,4 @@ class AutoLetsEncrypt{
 		echo $output;
 		return true;
 	}
-}
-
-
-$domains = parse_ini_file('domains.ini', true);
-
-$ale = new AutoLetsEncrypt();
-
-
-foreach($domains as $domain=>$data){
-	$ale->issueCertificate($domain, $data);
 }
