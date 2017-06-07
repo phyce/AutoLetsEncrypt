@@ -9,10 +9,11 @@ $ale = new AutoLetsEncrypt($settings);
 if(sizeof($argv) > 1){
 	foreach($argv as $arg){
 		if(substr($arg, 0, 3) === '-d='){
-			if($domains[$arg] != NULL){
-				$ale->issueCertificate($domain, $domains[$arg]);
+			$domain = substr($arg, 3);
+			if($domains[$domain] != NULL){
+				$ale->issueCertificate($domain, $domains[$domain]);
 			}else{
-				echo sprintf('"%1$s" not found domains.ini.', $arg);
+				echo sprintf('"%1$s" not found domains.ini.', $domain);
 			}
 		}
 	}

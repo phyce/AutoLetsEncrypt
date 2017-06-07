@@ -1,11 +1,11 @@
 <?php
 
 class AutoLetsEncrypt{
-	private $php_dir;
-	private $acme_dir;
-	private $host_dir;
-	private $acme_type;
-	private $cert_dir;
+	protected $php_dir;
+	protected $acme_dir;
+	protected $host_dir;
+	protected $acme_type;
+	protected $cert_dir;
 
 	function __construct($settings = array()){
 		$this->php_dir = $settings['php_dir'];
@@ -16,8 +16,6 @@ class AutoLetsEncrypt{
 	}
 
 	public function issueCertificate($domain, $data=array()){
-		$timestamp = date('Y-m-d-H-i-s');
-
 		$command = sprintf(
 			'%1$s -f %2$s/acme-client.phar issue -d %3$s -p %4$s/%5$s',
 			$this->php_dir,
